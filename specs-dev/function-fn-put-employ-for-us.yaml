@@ -1,0 +1,55 @@
+include:
+- ./func/*
+kind: ArchiveUploadSpec
+name: func-aSV4
+
+---
+apiVersion: fission.io/v1
+kind: Package
+metadata:
+  creationTimestamp: null
+  name: fn-put-employ-for-us-e8cff8d7-2a7d-4703-b92e-d3ed50a4693b
+  namespace: default
+spec:
+  deployment:
+    checksum: {}
+  environment:
+    name: env-put-employ-for-us
+    namespace: default
+  source:
+    checksum: {}
+    type: url
+    url: archive://func-aSV4
+status:
+  buildstatus: pending
+  lastUpdateTimestamp: "2022-07-19T19:06:54Z"
+
+---
+apiVersion: fission.io/v1
+kind: Function
+metadata:
+  creationTimestamp: null
+  name: fn-put-employ-for-us
+  namespace: default
+spec:
+  InvokeStrategy:
+    ExecutionStrategy:
+      ExecutorType: newdeploy
+      MaxScale: 1
+      MinScale: 1
+      SpecializationTimeout: 120
+      TargetCPUPercent: 80
+    StrategyType: execution
+  concurrency: 500
+  environment:
+    name: env-put-employ-for-us
+    namespace: default
+  functionTimeout: 60
+  idletimeout: 120
+  package:
+    functionName: main.update_employ_for_us
+    packageref:
+      name: fn-put-employ-for-us-e8cff8d7-2a7d-4703-b92e-d3ed50a4693b
+      namespace: default
+  requestsPerPod: 1
+  resources: {}
