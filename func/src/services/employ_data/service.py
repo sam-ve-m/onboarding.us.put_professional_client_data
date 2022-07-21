@@ -49,7 +49,7 @@ class EmployDataService:
             status_sent_to_persephone,
         ) = await cls.persephone_client.send_to_persephone(
             topic=config("PERSEPHONE_TOPIC_USER"),
-            partition=PersephoneQueue.USER_TAX_RESIDENCE_CONFIRMATION_US.value,
+            partition=PersephoneQueue.USER_EMPLOY_US.value,
             message=cls.__model_employ_data_to_persephone(
                 employ_status=user_employ_status,
                 employ_type=user_employ_type,
