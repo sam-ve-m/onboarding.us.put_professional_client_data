@@ -2,7 +2,6 @@ from http import HTTPStatus
 
 from etria_logger import Gladsheim
 from flask import request, Request, Response
-from heimdall_client import Heimdall, HeimdallStatusResponses
 
 from src.domain.enums.response.code import InternalCode
 from src.domain.exceptions.model import (
@@ -10,7 +9,7 @@ from src.domain.exceptions.model import (
     InternalServerError,
     InvalidStepError,
 )
-from src.domain.models.request.model import EmployForUs
+from src.domain.models.request.model import EmployRequest
 from src.domain.models.response.model import ResponseModel
 from src.services.employ_data.service import EmployDataService
 
@@ -20,24 +19,17 @@ async def update_employ_for_us(request: Request = request) -> Response:
     x_thebes_answer = request.headers.get("x-thebes-answer")
 
     try:
-        jwt_content, heimdall_status = await Heimdall.decode_payload(
-            jwt=x_thebes_answer
+        employ_request = await EmployRequest.build(
+            x_thebes_answer=x_thebes_answer,
+            parameters=raw_params,
         )
-        if heimdall_status != HeimdallStatusResponses.SUCCESS:
-            raise UnauthorizedError()
 
-        employ_for_us_model = EmployForUs(**raw_params)
-
-        payload = {
-            "x_thebes_answer": x_thebes_answer,
-            "data": jwt_content["decoded_jwt"],
-        }
-        external_fiscal_tax = await EmployDataService.update_employ_for_us(
-            employ_data=employ_for_us_model, payload=payload
+        employ = await EmployDataService.update_employ_for_us(
+            employ_request=employ_request
         )
 
         response = ResponseModel(
-            result=external_fiscal_tax,
+            result=employ,
             success=True,
             code=InternalCode.SUCCESS,
             message="Register Updated.",
