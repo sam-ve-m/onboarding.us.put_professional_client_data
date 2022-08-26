@@ -20,9 +20,9 @@ class EmployData(UserData):
 
     def get_data_representation(self) -> dict:
         data = {
-            "external_exchange_requirements.us.employ_status": self.employ_status,
-            "external_exchange_requirements.us.employ_type": self.employ_type,
-            "external_exchange_requirements.us.employ_position": self.employ_position,
-            "external_exchange_requirements.us.employ_company_name": self.employ_company_name,
+            "external_exchange_requirements.us.user_employ_status": self.employ_status,
+            "external_exchange_requirements.us.user_employ_type": self.employ_type,
+            "external_exchange_requirements.us.user_employ_position": self.employ_position,
+            "external_exchange_requirements.us.user_employ_company_name": self.employ_company_name,
         }
         return data
