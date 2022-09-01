@@ -3,7 +3,7 @@ from persephone_client import Persephone
 
 from src.domain.enums.persephone_queue import PersephoneQueue
 from src.domain.exceptions.model import InternalServerError, InvalidStepError
-from src.domain.models.request.model import EmployForUs, EmployRequest
+from src.domain.models.request.model import EmployRequest
 from src.domain.models.user_data.employ.model import EmployData
 from src.repositories.user.repository import UserRepository
 from src.transport.user_step.transport import StepChecker
@@ -24,8 +24,7 @@ class EmployDataService:
         return data
 
     @classmethod
-    async def update_employ_for_us(cls, employ_request: EmployRequest) -> None:
-
+    async def update_employ_for_us(cls, employ_request: EmployRequest):
         user_step = await StepChecker.get_onboarding_step(
             x_thebes_answer=employ_request.x_thebes_answer
         )
