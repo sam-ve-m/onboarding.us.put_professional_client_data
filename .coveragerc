@@ -2,7 +2,6 @@
 omit =
     func/src/domain/*
     func/src/infrastructures/*
-    func/src/repositories/*
     */__init__.py
 
 # command to run
