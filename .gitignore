@@ -51,8 +51,9 @@ Thumbs.db
 # Python virtual env
 venv/
 
-# Pytest
+# Test
 .pytest-cache/
+.coverage
 
 # Environment variables
 .env

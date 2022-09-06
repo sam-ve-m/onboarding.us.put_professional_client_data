@@ -1,17 +1,19 @@
 from unittest.mock import patch
 
+import decouple
 from etria_logger import Gladsheim
 from flask import Flask
 from heimdall_client.bifrost import Heimdall, HeimdallStatusResponses
 from pytest import mark
 from werkzeug.test import Headers
 
-from main import update_employ_for_us
-from src.domain.exceptions.model import (
-    InvalidStepError,
-    InternalServerError,
-)
-from src.services.employ_data.service import EmployDataService
+with patch.object(decouple, "config", return_value=""):
+    from main import update_employ_for_us
+    from src.domain.exceptions.model import (
+        InvalidStepError,
+        InternalServerError,
+    )
+    from src.services.employ_data.service import EmployDataService
 
 request_ok = {
     "user_employ_status": "EMPLOYED",
