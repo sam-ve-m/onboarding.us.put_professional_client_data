@@ -1,0 +1,8 @@
+[run]
+omit =
+    func/src/domain/*
+    func/src/infrastructures/*
+    */__init__.py
+
+# command to run
+# pytest --cov-report term-missing --cov-config=.coveragerc --cov=func -v
