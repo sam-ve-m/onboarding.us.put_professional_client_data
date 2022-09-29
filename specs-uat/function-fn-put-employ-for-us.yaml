@@ -51,5 +51,5 @@ spec:
     packageref:
       name: fn-put-employ-for-us-e8cff8d7-2a7d-4703-b92e-d3ed50a4693b
       namespace: default
-  requestsPerPod: 1
+  requestsPerPod: 10000
   resources: {}
