@@ -25,9 +25,9 @@ company_director_request_dummy = EmployRequest(
 )
 company_director_data_dummy = EmployData(
     unique_id=company_director_request_dummy.unique_id,
-    employ_status=employ_model_dummy.user_employ_status.value,
-    employ_type=employ_model_dummy.user_employ_type.value,
-    employ_position=employ_model_dummy.user_employ_position.value,
+    employ_status=employ_model_dummy.user_employ_status,
+    employ_type=employ_model_dummy.user_employ_type,
+    employ_position=employ_model_dummy.user_employ_position,
     employ_company_name=employ_model_dummy.user_employ_company_name,
 )
 onboarding_step_correct_stub = UserOnboardingStep("finished", "employ")
