@@ -36,9 +36,9 @@ class EmployDataService:
         employ = employ_request.employ
         employ_data = EmployData(
             employ_request.unique_id,
-            employ_status=employ.user_employ_status.value,
-            employ_type=employ.user_employ_type.value,
-            employ_position=employ.user_employ_position.value,
+            employ_status=employ.user_employ_status,
+            employ_type=employ.user_employ_type,
+            employ_position=employ.user_employ_position,
             employ_company_name=employ.user_employ_company_name,
         )
 
