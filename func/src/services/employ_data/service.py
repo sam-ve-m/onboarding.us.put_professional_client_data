@@ -4,6 +4,7 @@ from persephone_client import Persephone
 from src.domain.enums.persephone_queue import PersephoneQueue
 from src.domain.exceptions.model import InternalServerError, InvalidStepError
 from src.domain.models.request.model import EmployRequest
+from src.domain.models.user_data.device_info.model import DeviceInfo
 from src.domain.models.user_data.employ.model import EmployData
 from src.repositories.user.repository import UserRepository
 from src.transport.user_step.transport import StepChecker
@@ -13,13 +14,17 @@ class EmployDataService:
     persephone_client = Persephone
 
     @staticmethod
-    def __model_employ_data_to_persephone(employ_data: EmployData) -> dict:
+    def __model_employ_data_to_persephone(
+        employ_data: EmployData, device_info: DeviceInfo
+    ) -> dict:
         data = {
             "unique_id": employ_data.unique_id,
             "employ_status": employ_data.employ_status,
             "employ_type": employ_data.employ_type,
             "employ_position": employ_data.employ_position,
             "employ_company_name": employ_data.employ_company_name,
+            "device_info": device_info.device_info,
+            "device_id": device_info.device_id,
         }
         return data
 
@@ -48,7 +53,10 @@ class EmployDataService:
         ) = await cls.persephone_client.send_to_persephone(
             topic=config("PERSEPHONE_TOPIC_USER"),
             partition=PersephoneQueue.USER_EMPLOY_US.value,
-            message=cls.__model_employ_data_to_persephone(employ_data=employ_data),
+            message=cls.__model_employ_data_to_persephone(
+                employ_data=employ_data,
+                device_info=employ_request.device_info,
+            ),
             schema_name="user_employ_form",
         )
         if sent_to_persephone is False:
