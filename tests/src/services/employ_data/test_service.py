@@ -2,14 +2,17 @@ from unittest.mock import patch
 
 import pytest
 from persephone_client import Persephone
+from decouple import Config
 
-from src.domain.exceptions.model import InternalServerError, InvalidStepError
-from src.domain.models.request.model import EmployForUs, EmployRequest
-from src.domain.models.user_data.employ.model import EmployData
-from src.domain.models.user_data.onboarding_step.model import UserOnboardingStep
-from src.repositories.user.repository import UserRepository
-from src.services.employ_data.service import EmployDataService
-from src.transport.user_step.transport import StepChecker
+with patch.object(Config, "__call__"):
+    from src.domain.exceptions.model import InternalServerError, InvalidStepError
+    from src.domain.models.request.model import EmployForUs, EmployRequest
+    from src.domain.models.user_data.device_info.model import DeviceInfo
+    from src.domain.models.user_data.employ.model import EmployData
+    from src.domain.models.user_data.onboarding_step.model import UserOnboardingStep
+    from src.repositories.user.repository import UserRepository
+    from src.services.employ_data.service import EmployDataService
+    from src.transport.user_step.transport import StepChecker
 
 employ_model_dummy = EmployForUs(
     **{
@@ -19,9 +22,12 @@ employ_model_dummy = EmployForUs(
         "user_employ_company_name": "CAESAR Inc.",
     }
 )
-
+stub_device_info = DeviceInfo({"precision": 1}, "")
 company_director_request_dummy = EmployRequest(
-    x_thebes_answer="x_thebes_answer", unique_id="unique_id", employ=employ_model_dummy
+    x_thebes_answer="x_thebes_answer",
+    unique_id="unique_id",
+    employ=employ_model_dummy,
+    device_info=stub_device_info,
 )
 company_director_data_dummy = EmployData(
     unique_id=company_director_request_dummy.unique_id,
@@ -36,7 +42,7 @@ onboarding_step_incorrect_stub = UserOnboardingStep("finished", "some_step")
 
 def test___model_company_director_data_to_persephone():
     result = EmployDataService._EmployDataService__model_employ_data_to_persephone(
-        company_director_data_dummy
+        company_director_data_dummy, stub_device_info
     )
     expected_result = {
         "unique_id": company_director_data_dummy.unique_id,
@@ -44,6 +50,8 @@ def test___model_company_director_data_to_persephone():
         "employ_type": company_director_data_dummy.employ_type,
         "employ_position": company_director_data_dummy.employ_position,
         "employ_company_name": company_director_data_dummy.employ_company_name,
+        "device_info": stub_device_info.device_info,
+        "device_id": stub_device_info.device_id,
     }
     assert result == expected_result
 
