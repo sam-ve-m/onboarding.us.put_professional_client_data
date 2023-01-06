@@ -1,9 +1,9 @@
 from typing import Optional
 
-from src.domain.enums.drive_wealth.employed_position import EmployedPosition
-from src.domain.enums.drive_wealth.employed_status import EmployedStatus
-from src.domain.enums.drive_wealth.employed_type import EmployedType
-from src.domain.models.user_data.model import UserData
+from func.src.domain.enums.drive_wealth.employed_position import EmployedPosition
+from func.src.domain.enums.drive_wealth.employed_status import EmployedStatus
+from func.src.domain.enums.drive_wealth.employed_type import EmployedType
+from func.src.domain.models.user_data.model import UserData
 
 
 class EmployData(UserData):
