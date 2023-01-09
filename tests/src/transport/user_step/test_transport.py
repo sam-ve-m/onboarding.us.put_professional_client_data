@@ -3,8 +3,8 @@ from unittest.mock import patch
 import pytest
 from etria_logger import Gladsheim
 
-from src.domain.models.user_data.onboarding_step.model import UserOnboardingStep
-from src.transport.user_step.transport import StepChecker
+from func.src.domain.models.user_data.onboarding_step.model import UserOnboardingStep
+from func.src.transport.user_step.transport import StepChecker
 
 
 class SessionMock:

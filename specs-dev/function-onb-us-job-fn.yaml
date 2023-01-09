@@ -1,35 +1,35 @@
 include:
-- ./func/*
+- fission.py
 kind: ArchiveUploadSpec
-name: func-aSV4
+name: fission-py-7ftX
 
 ---
 apiVersion: fission.io/v1
 kind: Package
 metadata:
   creationTimestamp: null
-  name: fn-put-employ-for-us-e8cff8d7-2a7d-4703-b92e-d3ed50a4693b
+  name: onb-us-job-fn-47e4745e-c9fc-49a3-81cb-c65173fea6f0
   namespace: default
 spec:
   deployment:
     checksum: {}
+    type: url
+    url: archive://fission-py-7ftX
   environment:
-    name: env-put-employ-for-us
+    name: onb-us-job-env
     namespace: default
   source:
     checksum: {}
-    type: url
-    url: archive://func-aSV4
 status:
-  buildstatus: pending
-  lastUpdateTimestamp: "2022-07-19T19:06:54Z"
+  buildstatus: none
+  lastUpdateTimestamp: "2023-01-06T14:19:54Z"
 
 ---
 apiVersion: fission.io/v1
 kind: Function
 metadata:
   creationTimestamp: null
-  name: fn-put-employ-for-us
+  name: onb-us-job-fn
   namespace: default
 spec:
   InvokeStrategy:
@@ -38,18 +38,24 @@ spec:
       MaxScale: 3
       MinScale: 1
       SpecializationTimeout: 120
-      TargetCPUPercent: 80
+      TargetCPUPercent: 0
+      hpaMetrics:
+      - resource:
+          name: cpu
+          target:
+            averageUtilization: 80
+            type: Utilization
+        type: Resource
     StrategyType: execution
   concurrency: 500
   environment:
-    name: env-put-employ-for-us
+    name: onb-us-job-env
     namespace: default
   functionTimeout: 60
   idletimeout: 120
   package:
-    functionName: main.update_employ_for_us
     packageref:
-      name: fn-put-employ-for-us-e8cff8d7-2a7d-4703-b92e-d3ed50a4693b
+      name: onb-us-job-fn-47e4745e-c9fc-49a3-81cb-c65173fea6f0
       namespace: default
   requestsPerPod: 10000
   resources: {}

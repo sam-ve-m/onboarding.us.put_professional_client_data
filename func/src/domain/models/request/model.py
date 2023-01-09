@@ -2,12 +2,12 @@ from typing import Optional, Dict, Any
 
 from pydantic import BaseModel, constr, root_validator
 
-from src.domain.enums.drive_wealth.employed_position import EmployedPosition
-from src.domain.enums.drive_wealth.employed_status import EmployedStatus
-from src.domain.enums.drive_wealth.employed_type import EmployedType
-from src.domain.models.jwt_data.model import Jwt
-from src.domain.models.user_data.device_info.model import DeviceInfo
-from src.transport.device_info.transport import DeviceSecurity
+from func.src.domain.enums.drive_wealth.employed_position import EmployedPosition
+from func.src.domain.enums.drive_wealth.employed_status import EmployedStatus
+from func.src.domain.enums.drive_wealth.employed_type import EmployedType
+from func.src.domain.models.jwt_data.model import Jwt
+from func.src.domain.models.user_data.device_info.model import DeviceInfo
+from func.src.transport.device_info.transport import DeviceSecurity
 
 
 class EmployForUs(BaseModel):
