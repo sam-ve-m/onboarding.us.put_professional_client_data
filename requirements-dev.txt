@@ -2,3 +2,4 @@
 pytest-asyncio
 mutatest
 werkzeug
+pre-commit==2.21.0
